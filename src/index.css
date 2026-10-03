@@ -1,0 +1,237 @@
+/* 1. Google Font Import (Poppins) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* 2. Tailwind Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 3. Custom Global Styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    /* Updated background to match Green-White theme consistently */
+    @apply text-gray-800 bg-transparent;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold text-gray-900;
+  }
+}
+
+/* 4. Custom Scrollbar (Green Theme) */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0fdf4;
+  /* Very light green track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #15803d;
+  /* Dark green thumb */
+  border-radius: 10px;
+}
+
+/* 5. Infinite Rotation Animation for Government Schemes */
+
+/* Keyframe for sliding animation - moves list to the left */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+    /* Moves exactly half-way because list is doubled */
+  }
+}
+
+/* Animation Utility Class used in Home.jsx */
+.animate-scroll-slow {
+  animation: scroll 25s linear infinite;
+  /* Smooth continuous speed */
+  display: flex;
+  width: max-content;
+}
+
+/* Pause animation when user hovers or interacts with the list */
+.pause-animation:hover,
+.pause-animation:active {
+  animation-play-state: paused;
+}
+
+/* 6. Clean UI Utilities */
+
+/* Hide Scrollbar for containers using .no-scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Global utility for consistent card shadows in new theme */
+.green-shadow {
+  box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.1), 0 4px 6px -4px rgba(34, 197, 94, 0.1);
+}
+
+/* 7. New UI Animations */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+/* 8. Skeleton Loading Effect */
+.skeleton-pulse {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 9. Premium Color Utilities */
+.text-primary-green {
+  color: #166534;
+}
+
+.bg-primary-green {
+  background-color: #166534;
+}
+
+.text-accent-yellow {
+  color: #d97706;
+}
+
+.bg-accent-yellow {
+  background-color: #fbbf24;
+}
+
+.border-accent-yellow {
+  border-color: #fbbf24;
+}
+
+/* 10. New UI Animations */
+@keyframes nav-pop {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+.animate-nav-pop {
+  animation: nav-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes page-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: page-enter 0.4s ease-out forwards;
+}
+
+@keyframes glow-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+
+  50% {
+    opacity: 0.7;
+    transform: translateX(-50%) scale(1.2);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s infinite ease-in-out;
+}
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 2s infinite ease-in-out;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
