@@ -3,7 +3,7 @@
 
 ### Live Demo
 
-https://krishi-dhan.vercel.app
+https://pixel-krishidhan.vercel.app/
 
 ---
 
