@@ -18,6 +18,7 @@ import PaymentDemo from "./pages/PaymentDemo";
 import Schemes from "./pages/Schemes";
 import ImpactDashboard from "./pages/ImpactDashboard";
 import CleanupRequests from "./pages/CleanupRequests";
+import HelpSupport from "./pages/HelpSupport";
 
 
 import Chatbot from "./components/Chatbot";
@@ -169,6 +170,15 @@ function App() {
                         element={
                             <ProtectedRoute>
                                 <CleanupRequests t={t} />
+                            </ProtectedRoute>
+                        }
+                    />
+
+                    <Route
+                        path="/help"
+                        element={
+                            <ProtectedRoute>
+                                <HelpSupport t={t} />
                             </ProtectedRoute>
                         }
                     />

@@ -428,57 +428,58 @@ let recaptchaVerifierInstance = null;
 let recaptchaContainerEl = null;
 
 function getRecaptchaContainer() {
-    // Reuse the existing container if it's still in the DOM
+    // Completely remove the old container if it exists
     if (recaptchaContainerEl && document.body.contains(recaptchaContainerEl)) {
-        recaptchaContainerEl.innerHTML = '';
-        return recaptchaContainerEl;
+        try {
+            recaptchaContainerEl.remove();
+        } catch (e) {}
     }
 
     // Create a new persistent container
     const el = document.createElement('div');
     el.id = 'kd-recaptcha-container-' + Date.now();
+    // Do not hide it completely with display:none or visibility:hidden
+    // Recaptcha sometimes fails to render if it's completely invisible
     el.style.position = 'fixed';
     el.style.bottom = '0';
     el.style.right = '0';
-    el.style.width = '1px';
-    el.style.height = '1px';
-    el.style.overflow = 'hidden';
     el.style.opacity = '0.01';
-    el.style.pointerEvents = 'none';
-    el.style.zIndex = '-1';
+    el.style.zIndex = '-1000';
     document.body.appendChild(el);
     recaptchaContainerEl = el;
     return el;
 }
 
 function safelyClearRecaptcha() {
+    if (window.recaptchaVerifier) {
+        try {
+            window.recaptchaVerifier.clear();
+        } catch (e) {}
+        window.recaptchaVerifier = null;
+    }
     if (recaptchaVerifierInstance) {
         try {
             recaptchaVerifierInstance.clear();
-        } catch (e) {
-            // Ignore errors from clearing (DOM node may already be removed)
-            console.warn('[KrishiDhan] reCAPTCHA clear warning (safe to ignore):', e?.message || e);
-        }
+        } catch (e) {}
         recaptchaVerifierInstance = null;
     }
-    // Also clean up the container
     if (recaptchaContainerEl && document.body.contains(recaptchaContainerEl)) {
         try {
-            recaptchaContainerEl.innerHTML = '';
-        } catch {}
+            recaptchaContainerEl.remove();
+        } catch (e) {}
+        recaptchaContainerEl = null;
     }
 }
 
 export function setupRecaptcha() {
     if (!auth) return null;
 
-    // Safely clear any existing verifier first
     safelyClearRecaptcha();
 
     const container = getRecaptchaContainer();
 
     try {
-        recaptchaVerifierInstance = new RecaptchaVerifier(auth, container, {
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, container.id, {
             size: 'invisible',
             callback: () => {
                 console.log('[KrishiDhan] reCAPTCHA solved invisibly');
@@ -488,7 +489,8 @@ export function setupRecaptcha() {
                 safelyClearRecaptcha();
             },
         });
-        return recaptchaVerifierInstance;
+        recaptchaVerifierInstance = window.recaptchaVerifier;
+        return window.recaptchaVerifier;
     } catch (err) {
         console.error('[KrishiDhan] RecaptchaVerifier setup error:', err);
         return null;
@@ -569,7 +571,7 @@ export async function sendOtp(phoneNumber) {
         // Fallback: show actual error code for debugging
         return fail(
             ServiceErrorCode.AUTH_ERROR,
-            `OTP sending failed [${code}]. Please try Email or Google login instead.`,
+            `OTP sending failed [${code}]: ${error?.message || 'unknown error'}. Please try Email or Google login instead.`,
             toErrorDetails(error)
         );
     }

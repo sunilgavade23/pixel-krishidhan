@@ -61,3 +61,4 @@ export {
     PLATFORM_FEE_RATE,
 } from './rateCard';
 export { getEquipmentByCategory, EQUIPMENT_BY_CATEGORY } from './equipmentCatalog';
+export { submitSupportTicket } from './supportService';

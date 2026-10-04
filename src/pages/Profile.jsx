@@ -228,7 +228,10 @@ const Profile = ({ t, setLang, currentLang }) => {
                         </div>
                     </div>
 
-                    <button className="w-full bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between active:scale-98 transition-transform">
+                    <button 
+                        onClick={() => navigate('/help')}
+                        className="w-full bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex items-center justify-between active:scale-98 transition-transform"
+                    >
                         <div className="flex items-center gap-4">
                             <div className="bg-purple-50 p-2.5 rounded-xl text-purple-600">
                                 <HelpCircle size={20} />
