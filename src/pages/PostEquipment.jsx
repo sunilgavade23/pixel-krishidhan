@@ -118,17 +118,25 @@ const PostEquipment = ({ t }) => {
             navigate('/login');
             return;
         }
-        // Use the owner's real GPS coordinates if available (stored by Home.jsx)
-        let coords = { lat: 0, lng: 0 };
+
+        // Fetch precise location of the equipment owner during submission
+        let coords = null;
         try {
-            const savedCoords = JSON.parse(localStorage.getItem('kd_user_coords') || 'null');
-            if (savedCoords && Number.isFinite(savedCoords.lat) && Number.isFinite(savedCoords.lng) && !(savedCoords.lat === 0 && savedCoords.lng === 0)) {
-                coords = savedCoords;
-            } else {
-                coords = getCoordinates(formData.city);
-            }
-        } catch {
-            coords = getCoordinates(formData.city);
+            coords = await new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject(new Error('Geolocation not supported'));
+                    return;
+                }
+                navigator.geolocation.getCurrentPosition(
+                    (position) => resolve({ lat: position.coords.latitude, lng: position.coords.longitude }),
+                    (error) => reject(error),
+                    { enableHighAccuracy: true, timeout: 10000 }
+                );
+            });
+        } catch (err) {
+            setSubmitting(false);
+            setError('Location permission is required to post equipment. Please enable GPS and allow location access.');
+            return; // Prevent submission without accurate coordinates
         }
 
         const listingData = {

@@ -192,14 +192,15 @@ const Home = ({ t }) => {
             (geoError) => {
                 setLocationError(geoError?.message || 'Unable to access location');
                 setLocationStatus('denied');
+                // Clear cached coordinates if explicitly denied to avoid showing stale distances
+                setUserCoords(null);
+                localStorage.removeItem('kd_user_coords');
             },
             { enableHighAccuracy: true, timeout: 10000 }
         );
     };
 
     useEffect(() => {
-        const hasCoords = !!userCoords;
-        if (hasCoords) return;
         if (!navigator.geolocation) return;
         detectCurrentLocation();
     }, []);

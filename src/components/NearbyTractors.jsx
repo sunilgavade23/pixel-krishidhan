@@ -253,7 +253,7 @@ const NearbyTractors = ({ t, userCoords, locationStatus }) => {
                                         <div>
                                             <div className="flex items-center gap-1 text-[10px] text-green-700 font-bold mb-0.5">
                                                 <MapPin size={10} />
-                                                <span>{item.distanceKm.toFixed(1)} km away</span>
+                                                <span>{item.distanceKm < 0.1 ? '< 0.1 km away' : `${item.distanceKm.toFixed(1)} km away`}</span>
                                             </div>
                                             <div className="flex items-baseline gap-0.5">
                                                 <span className="text-green-700 font-black text-sm">

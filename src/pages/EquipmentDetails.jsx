@@ -573,7 +573,7 @@ const EquipmentDetails = ({ t }) => {
                                     <p>{t('rate')}: Rs {computed.selectedRate}/{computed.bookingType || '-'}</p>
                                     <p>{t('quantity')}: {computed.quantity || 0}</p>
                                     <p>{t('base_cost')}: Rs {computed.baseCost}</p>
-                                    {isOwnerPricedRent && <p>Logistics ({listingDistanceKm.toFixed(1)} km): Rs {computed.travelCost}</p>}
+                                    {isOwnerPricedRent && <p>Logistics ({listingDistanceKm < 0.1 ? '< 0.1' : listingDistanceKm.toFixed(1)} km): Rs {computed.travelCost}</p>}
                                     <p>{t('platform_fee')}: Rs {computed.platformFee}</p>
                                     <p className="font-bold text-green-700">{t('estimated_total')}: Rs {computed.totalCost}</p>
                                 </div>
