@@ -598,4 +598,4 @@ pixel-krishidhan/
 
 ---
 # Author
-Developed by **Sunil**
+Developed by **Sunil Gavade**
