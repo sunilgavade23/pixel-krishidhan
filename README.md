@@ -476,4 +476,4 @@ pixel-krishidhan/
 ├── vercel.json
 └── README.md
 Author
-Developed by SunilSunil Gavade
+Developed by Sunil Gavade
