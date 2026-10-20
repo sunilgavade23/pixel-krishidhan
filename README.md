@@ -1,171 +1,440 @@
-📍 GeoMark
-Smart QR-Based Attendance System with GPS Geofencing
+🌾 KrishiDhan
+Location-Based Agricultural Equipment Rental Platform
+Live Demo
+https://pixel-krishidhan.vercel.app/
 Overview
-GeoMark is a web-based attendance management system that uses QR-code check-ins and GPS geofencing to help teachers record and monitor student attendance. Teachers create attendance sessions for a class, and students scan the session QR code while within the configured location radius.
+KrishiDhan is a location-based agricultural equipment rental platform designed to help small and marginal farmers easily find and rent agricultural machinery from nearby equipment owners.
 
-The application supports teacher and student accounts, live session monitoring, attendance management, and CSV reports.
+Small farmers often cannot afford to purchase expensive machinery such as tractors, cultivators, rotavators, harvesters and trolleys. At the same time, many equipment owners have machinery that remains unused for significant periods.
+
+KrishiDhan connects these two sides through a simple digital marketplace.
+
+The platform allows:
+- Farmers to discover nearby agricultural equipment
+- Equipment owners to list their machinery
+- Farmers to check equipment availability
+- Farmers to send rental requests
+- Equipment owners to accept or reject requests
+- Farmers and owners to manage their listings and bookings
+A key feature of KrishiDhan is its location-based discovery system, which prioritizes equipment available within a practical geographic radius of the farmer.
 Problem
-Manual attendance can consume class time and make records difficult to organize. QR codes alone can also be shared with students who are not physically present in the classroom.
+Small and marginal farmers often depend on rented agricultural machinery for timely farming operations.
 
-GeoMark combines QR-based check-in with a distance check against the classroom coordinates to make attendance recording more convenient and location-aware.
+However, finding the right machine at the right time remains difficult because the agricultural equipment rental market is often fragmented and dependent on manual coordination.
+
+Common challenges include:
+- Limited access to expensive agricultural machinery
+- High cost of purchasing tractors and implements
+- Difficulty finding nearby equipment during peak farming seasons
+- Dependence on phone calls and personal contacts
+- Lack of centralized information about equipment availability
+- Equipment owners having machinery remain idle when there is no demand
+- Difficulty coordinating rental requests and availability
+This creates an information and accessibility gap between farmers who need machinery and owners who have machinery available.
 Solution
-Teachers create an attendance session with the subject, class, division, classroom coordinates, and an allowed radius. Students log in, scan the session QR code, and submit their location. GeoMark calculates the distance between the student's coordinates and the session location, then records attendance only if the session is active and the student is within the configured radius.
-How It Works
-Teacher Flow
-1. Register or log in as a teacher.
-2. Create an attendance session and select the subject and class.
-3. Set the classroom location and geofence radius.
-4. Display the session QR code to students.
-5. Monitor attendance and manage recorded statuses.
-6. Close the session and export attendance as a CSV file.
-Student Flow
-1. Register or log in as a student.
-2. Open the student dashboard and scan the session QR code.
-3. Allow browser location access when prompted.
-4. Submit the check-in for geofence validation.
-5. View personal attendance information from the student dashboard.
-Core Features
-- Role-based accounts: Separate teacher and student experiences.
-- QR-based attendance: Students check in using a session-specific QR code.
-- GPS geofencing: Validates the distance between the student's location and the classroom.
-- Configurable radius: Teachers set the permitted radius for each session.
-- Live session monitoring: Teachers can view attendance updates during an active session.
-- Attendance management: Teachers can review records and update statuses to Present, Absent, or Late, with notes.
-- Student dashboard: Students can review their attendance information.
-- CSV export: Export a session's attendance roster and details.
-- Dual database support: SQLite for local development and Firebase Cloud Firestore for production deployment.
-📍 Location Validation
-GeoMark uses the browser Geolocation API to obtain the student's latitude and longitude. It then uses the Haversine formula to calculate the distance between the student's reported coordinates and the classroom coordinates.
+KrishiDhan provides a centralized digital platform connecting farmers and agricultural equipment owners.
 
-Attendance is accepted only when:
-- The QR/session token is valid.
-- The attendance session is still active.
-- The student's calculated distance is within the session's configured radius.
-The radius is configurable by the teacher, from greater than 0 up to 5,000 metres. Geolocation depends on browser permission and device accuracy, so it should not be treated as cryptographic proof of physical presence.
+The platform allows equipment owners to list their machinery with details such as:
+- Equipment type
+- Equipment name
+- Images
+- Pricing
+- Availability
+- Location
+Farmers can then discover suitable machinery near their current location, view equipment details, check availability and send rental requests.
+
+This creates a more organized and transparent equipment rental workflow.
+How It Works
+Farmer
+
+↓
+
+Login / Registration
+
+↓
+
+Current Location Detection
+
+↓
+
+Nearby Equipment Discovery
+
+↓
+
+View Equipment Details
+
+↓
+
+Check Availability
+
+↓
+
+Send Rental Request
+
+↓
+
+Owner Reviews Request
+
+↓
+
+Accept / Reject
+
+↓
+
+Booking Status Updated
+Equipment Owner
+
+↓
+
+Login / Registration
+
+↓
+
+Post Equipment
+
+↓
+
+Add Equipment Details
+
+↓
+
+Set Price & Availability
+
+↓
+
+Location Saved
+
+↓
+
+Receive Rental Requests
+
+↓
+
+Accept / Reject Request
+
+↓
+
+Manage Equipment
+Core Features
+🚜 Agricultural Equipment Marketplace
+Equipment owners can list agricultural machinery on the platform.
+
+Supported equipment can include:
+- Tractors
+- Cultivators
+- Rotavators
+- Harvesters
+- Trolleys
+- Other agricultural implements
+Each listing can contain equipment details, pricing, availability and images.
+👨🌾 Farmer Dashboard
+Farmers get a dedicated interface to:
+- Browse agricultural equipment
+- View nearby machinery
+- View equipment details
+- Check availability
+- Send rental requests
+- Track booking requests
+- Manage their profile
+🚜 Equipment Owner Dashboard
+Equipment owners can:
+- Add new equipment
+- Upload equipment images
+- Set rental pricing
+- Update availability
+- Manage their listings
+- View rental requests
+- Accept or reject requests
+📍 Location-Based Equipment Discovery
+One of the core features of KrishiDhan is location-based equipment discovery.
+
+When an equipment owner lists machinery, the equipment's geographic coordinates are stored with the listing.
+
+When a farmer accesses the marketplace, the application detects the farmer's current location.
+
+The system then calculates the geographical distance between the farmer and available equipment.
+
+Only equipment within a 10 KM radius is displayed to the farmer.
+
+This helps farmers discover practically accessible machinery instead of searching through equipment located far away.
+📐 Distance Calculation
+KrishiDhan uses geographical distance calculation to determine whether equipment is within the required radius.
+
+The distance between the farmer and equipment coordinates is calculated using the Haversine formula.
+
+Conceptually:
+
+Farmer Latitude + Longitude
+
+↓
+
+Equipment Latitude + Longitude
+
+↓
+
+Distance Calculation
+
+↓
+
+Distance ≤ 10 KM
+
+↓
+
+Display Equipment
+
+This provides a location-aware equipment discovery experience.
+📍 Automatic Location Detection
+The application uses browser-based geolocation to obtain the user's current coordinates.
+
+The location system can be used to determine:
+- Latitude
+- Longitude
+- Nearby equipment
+- Village / locality information where supported
+This information is used to provide a more localized experience.
+🔐 Authentication
+KrishiDhan uses Firebase Authentication for secure user authentication.
+
+Supported authentication methods include:
+- Email & Password
+- Google Sign-In
+- Phone Number / OTP
+Phone OTP authentication is designed to provide a simpler login experience for users who prefer using their mobile number.
+
+Firebase's authentication security mechanisms, including reCAPTCHA protection for phone authentication, are used to reduce abuse and fraudulent requests.
+👤 Role-Based Access
+KrishiDhan provides different experiences based on the user's role.
+Farmer
+Farmers can:
+- Discover equipment
+- View listings
+- Check availability
+- Send rental requests
+- Track bookings
+Equipment Owner
+Equipment owners can:
+- Post equipment
+- Manage listings
+- Update availability
+- Receive requests
+- Accept or reject requests
+Role-based access helps keep farmer and owner workflows separate and easier to manage.
+📦 Equipment Listing
+Equipment owners can create listings by providing relevant information such as:
+- Equipment name
+- Equipment category
+- Description
+- Rental price
+- Availability
+- Images
+- Location
+The listing is then stored in Firebase Firestore.
+📅 Availability Management
+Equipment owners can manage whether their machinery is available for rental.
+
+Farmers can use availability information before sending a rental request.
+
+This helps reduce unnecessary requests and improves coordination between farmers and equipment owners.
+📝 Rental Request System
+Farmers can send rental requests for available equipment.
+
+The equipment owner can then:
+- Accept the request
+- Reject the request
+- Review request details
+- Manage incoming requests
+The corresponding booking/request status is updated in the system.
+☁ Image Upload
+Equipment images are stored using Cloudinary.
+
+This allows equipment owners to upload and display machinery images without storing large image files directly inside Firestore.
+🔥 Firebase Integration
+Firebase is used as the core backend service.
+Firebase Authentication
+Used for:
+- User registration
+- User login
+- Google authentication
+- Phone OTP authentication
+- Session management
+Firebase Firestore
+Used for storing application data such as:
+- Users
+- Equipment listings
+- Rental requests
+- Booking information
+- Availability information
 Technical Architecture
 Frontend
-- HTML
-- CSS
+- React.js
+- Vite
 - JavaScript
-- Jinja templates
-- QR scanning interface
-- Leaflet.js for the teacher's map interface
-Backend
-- Python
-- Flask
-Data Storage
-- SQLite for local development
-- Firebase Cloud Firestore for production
-Supporting Libraries and Services
-- qrcode and Pillow for QR-code generation
-- Firebase Admin SDK for Firestore integration
-- Browser Geolocation API for location capture
-- Vercel for deployment
-System Flow
-Teacher / Student
-        |
-        v
-   Flask Web App
-        |
-        +----------------------+
-        |                      |
-        v                      v
- Teacher Session          Student QR Check-in
-        |                      |
-        v                      v
- QR Code + Location       Get Browser Location
-        |                      |
-        +----------+-----------+
-                   |
-                   v
-        Haversine Distance Check
-                   |
-                   v
-       Active Session + Radius Check
-                   |
-                   v
-          Attendance Record
-                   |
-          +--------+--------+
-          |                 |
-          v                 v
-   Teacher Dashboard    Student Dashboard
-          |
-          v
-       CSV Export
-Technology Stack
-Component	Technology
-Language	Python
-Web framework	Flask
-Frontend	HTML, CSS, JavaScript, Jinja
-QR generation	qrcode, Pillow
-Database (local)	SQLite
-Database (production)	Firebase Cloud Firestore
-Maps	Leaflet.js
-Deployment	Vercel
+- Tailwind CSS
+- Lucide React
+Authentication
+- Firebase Authentication
+- Email & Password
+- Google Sign-In
+- Phone Authentication
+Backend / Database
+- Firebase Firestore
+- Firebase Authentication
+Image Storage
+- Cloudinary
+Location
+- Browser Geolocation API
+- Latitude & Longitude
+- Haversine distance calculation
+- Location-based filtering
+Deployment
+- Vercel
+System Architecture
+User
 
+↓
 
+React + Vite Frontend
+
+↓
+
+Firebase Authentication
+
+↓
+
+Role-Based Application Flow
+
+↓
+
+Farmer / Equipment Owner
+
+↓
+
+Firebase Firestore
+
+↓
+
+Listings / Requests / Users / Availability
+
+↓
+
+Cloudinary
+
+↓
+
+Equipment Images
+Data Flow
+Equipment Listing Flow
+Equipment Owner
+
+↓
+
+Post Equipment
+
+↓
+
+Capture Location
+
+↓
+
+Upload Image
+
+↓
+
+Save Equipment Data
+
+↓
+
+Firestore
+Farmer Discovery Flow
+Farmer
+
+↓
+
+Get Current Location
+
+↓
+
+Fetch Nearby Equipment
+
+↓
+
+Calculate Distance
+
+↓
+
+Apply 10 KM Filter
+
+↓
+
+Display Available Equipment
+Rental Flow
+Farmer
+
+↓
+
+Select Equipment
+
+↓
+
+Check Availability
+
+↓
+
+Send Request
+
+↓
+
+Firestore
+
+↓
+
+Equipment Owner
+
+↓
+
+Accept / Reject
+
+↓
+
+Booking Status
+Design Decisions
+📍 Strict 10 KM Radius
+The 10 KM radius was chosen to make equipment discovery more practical for farmers.
+
+Agricultural machinery such as tractors and harvesters involve transportation and operating costs, so showing extremely distant equipment may not be useful.
+📱 Farmer-Friendly Authentication
+Phone number authentication is supported to provide a simpler authentication option for farmers who may prefer mobile numbers over email.
+
+Google and Email/Password authentication are also supported for flexibility.
+☁ Cloudinary for Images
+Equipment photographs can consume significant storage space.
+
+Cloudinary is used for image storage and delivery while Firebase Firestore stores the corresponding equipment information.
+🔥 Firebase-Based Architecture
+Firebase provides authentication and cloud database capabilities without requiring a separately managed traditional server for the prototype.
+
+This allows the application to be developed and deployed quickly while maintaining a scalable architecture for future expansion.
 Project Structure
-GeoMark-attendance/
-├── app.py                 # Flask routes and application logic
-├── database.py            # Database access and SQLite/Firebase routing
-├── firebase_db.py         # Firebase Cloud Firestore operations
-├── utils.py               # Shared utilities and distance calculation
-├── seed_demo_data.py      # Creates local demonstration data
-├── seed_firebase.py       # Seeds demonstration data in Firebase
-├── requirements.txt       # Python dependencies
-├── vercel.json            # Vercel deployment configuration
-├── test_app.py            # Application tests
-├── templates/             # Jinja HTML templates
-└── static/
-    ├── css/               # Application styles
-    └── js/                # QR scanner and map scripts
-Getting Started
-Requirements
-- Python 3.10 or newer
-- pip
-1. Clone the Repository
-git clone https://github.com/sunilgavade23/GeoMark-attendance.git
-cd GeoMark-attendance
-2. Create a Virtual Environment
-Windows
-python -m venv .venv
-.venv\Scripts\activate
-macOS / Linux
-python3 -m venv .venv
-source .venv/bin/activate
-3. Install Dependencies
-pip install -r requirements.txt
-4. Run the Application
-python app.py
-Open http://localhost:5000 in your browser.
+pixel-krishidhan/
+│
+├── public/
+│
+├── scripts/
+│
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   ├── data/
+│   └── utils/
+│
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── vite.config.js
+├── tailwind.config.js
+├── vercel.json
+└── README.md
 
-For local development, GeoMark uses SQLite when Firebase is not configured.
-Optional: Load Demonstration Data
-python seed_demo_data.py
-Run this script only if you want sample users and records in your local database.
-Firebase and Vercel Deployment
-GeoMark requires Firebase Cloud Firestore for production deployment on Vercel. SQLite is disabled in production because serverless instances do not provide reliable persistent local storage.
-1. Create a Firebase project and enable Cloud Firestore.
-2. Create a Firebase service account and obtain its JSON credentials.
-3. In the Vercel project settings, configure these environment variables:
-Variable	Purpose
-FIREBASE_SERVICE_ACCOUNT_KEY	Firebase service-account JSON used to connect to Firestore
-SECRET_KEY	Secret key for Flask session signing
-
-
-4. Deploy the project to Vercel.
-5. Verify login, session creation, QR check-in, location validation, attendance updates, and CSV export on the deployed site.
-Keep service-account credentials and production secrets private. Never commit them to Git.
-Running Tests
-Run the included test suite with:
-python -m unittest test_app.py
-Security and Usage Notes
-- Browser geolocation generally requires HTTPS in deployed environments; localhost is treated as a secure context by modern browsers.
-- Students must grant location permission for location-based check-in.
-- GPS accuracy varies by device and environment.
-- Configure Firebase credentials and Firestore access appropriately before using real student records.
-- Change the default development secret by setting SECRET_KEY in the environment.
-- Do not commit secrets or real student data to the repository.
 Author
-Sunil Gavade
+Developed by Sunil Gavade
